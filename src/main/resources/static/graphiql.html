@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>GraphiQL</title>
+    <style>body{height:100vh;margin:0}#graphiql{height:100vh}</style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/graphiql@3.2.0/graphiql.min.css" />
+</head>
+<body>
+<div id="graphiql">Loading...</div>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/graphiql@3.2.0/graphiql.min.js"></script>
+<script>
+    const wsProtocol = location.protocol === 'https:' ? 'wss://' : 'ws://';
+    const fetcher = GraphiQL.createFetcher({
+        url: '/graphql',
+        subscriptionUrl: wsProtocol + location.host + '/graphql',
+    });
+
+    const root = ReactDOM.createRoot(document.getElementById('graphiql'));
+    root.render(
+        React.createElement(GraphiQL, {
+            fetcher: fetcher,
+            defaultEditorToolOpen: true,
+        })
+    );
+</script>
+</body>
+</html>
